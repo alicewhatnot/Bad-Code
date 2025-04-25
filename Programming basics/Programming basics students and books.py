@@ -1,0 +1,6 @@
+students = int(input("Enter the number of students: "))
+books = int(input("Enter the number of books: "))
+noOfBooksEach = (books // students)
+noOfSpare = (books % students)
+print ("Each student will get",noOfBooksEach,"books.")
+print ("There will be",noOfSpare,"books left.")
