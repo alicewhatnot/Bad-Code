@@ -1,4 +1,5 @@
 import math
+import datetime
 
 def numInput(text):
     '''Attempt to convert user input to integer'''
@@ -76,6 +77,13 @@ def dayWord(day):
         print ("Sunday")
     else:
         print ("Something broke")
+        
+def daysSinceAD(year,month,day):
+    difference = 0
+    start = datetime.date(1,1,1)
+    end = datetime.date(int(year),int(month),int(day))
+    difference = end - start
+    return (difference.days)
 
 day = numInput("Enter a day in numbers")
 month = numInput("Enter a month in numbers")
@@ -90,64 +98,15 @@ else:
     if valid == False:
         print ("Not a valid date")
     else:
-        if int(year) > 1750:
+        if int(year) > 0:
             print ("Valid date")
         else:
-            print ("Sorry, years below 1750 are unsupported.")
+            print ("Sorry, years below 1AD are unsupported.")
 
-def yearCode(year):
-    '''Convert year to yearcode for calc'''
-    #Adds a quarter of the last 2 digits of the year to 1/4 of itself
-    last2 = year[-2:]
-    quarter = int(last2) / 4
-    quarter = math.trunc(quarter)
-    yearCode = (int(last2) + int(quarter)) % 7
-    return yearCode
+day = daysSinceAD(year,month,day)
+day = int(day) % 7
+print (dayWord(day))
 
-def monthCode(month):
-    '''convert month to monthcode for calc'''
-    #Codes found from reddit x
-    if 2 < int(month) < 4:
-        monthCode = 33
-    elif 3 < int(month) < 7:
-        monthCode = 614
-    elif 7 < int(month) < 10:
-        monthCode = 625
-    else:
-        monthCode = 35
-    return monthCode
-
-def centuryCode(year):
-    '''convert year to centurycode for calc'''
-    first2 = year[:2]
-    calc = (int(first2) - 17) % 4
-    if calc == 0:
-        centuryCode = 4
-    elif calc == 1:
-        centuryCode = 2
-    elif calc == 2:
-        centuryCode = 0
-    elif calc == 3:
-        centuryCode = 6
-    return centuryCode
-
-def leapModifier(year,day):
-    '''removing days if the year is a leapyear'''
-    dateCode = day
-    year = int(year)
-    if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
-        dateCode = int(dateCode) - 1
-    return dateCode
-
-yearCode = yearCode(year)
-monthCode = monthCode(month)
-centuryCode = centuryCode(year)
-dateCode = leapModifier(year,day)
-namedDay = (int(yearCode) + int(monthCode) + int(centuryCode) + int(dateCode)) % 7
-dayWord(namedDay)
-
-
-    
     
     
     
