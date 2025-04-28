@@ -1,24 +1,21 @@
 import random
 primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 
-def getInteger():
+def getInteger(x):
     while True:
         try:
-            userInput = float(input("Enter your bet: £"))
+            if x == "a":
+                userInput = float(input("Enter your total balance: £"))
+            else:
+                userInput = float(input("Enter your bet: £"))
+                
             if userInput <= 0:
                 raise Exception
             return userInput
         except:
             print("Invalid entry. Try again")
 
-conditions = {"Even": "2x", "Multiple of 10": "3x", "Prime": "5x", "Below 5": "2x"}
-print ("You are betting on a number 0-30")
-for conditions, count in conditions.items():
-    print (f"{conditions:<15}: {count}")
-print ("Rewards stack. Good luck!\n")
-
-
-def multiplier(value):
+def addBonuses(value):
     #Multiplying based on number bonuses
     number = random.randint(0,30)
     multiplier = 1
@@ -40,9 +37,30 @@ def multiplier(value):
         multiplier = 0
     return value,number,multiplier
 
-bet = getInteger()
-bet,number,multiplier = multiplier(bet)
-print (f"The number was {number} and you win £{bet} at {multiplier}x.")
+def checkBet(account,value):
+    return account - value < 0
 
-#2. Develop your program to store the user’s current balance and stop them from betting if they have no money left
+def checkZero(account):
+    return account == 0
+    
+conditions = {"Even": "2x", "Multiple of 10": "3x", "Prime": "5x", "Below 5": "2x"}
+print ("You are betting on a number 0-30")
+for conditions, count in conditions.items():
+    print (f"{conditions:<15}: {count}")
+print ("Rewards stack. Good luck!\n")
+balance = getInteger("a")
+
+while True:
+    if checkZero(balance):
+        print ("You have no money left in your account.")
+    bet = getInteger("b")
+    if checkBet(balance,bet):
+        print ("Sorry, you don't have enough balance.")
+        break
+    bet,number,multiplier = addBonuses(bet)
+    print (f"The number was {number} and you win £{bet} at {multiplier}x.")
+    balance = balance + bet
+    print (f"Your current balance is {balance}")
+
+#2. Make it remove money from balance
 #4. Develop your program to allow multiple bets on different numbers
