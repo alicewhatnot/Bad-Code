@@ -1,4 +1,4 @@
-def getInteger(statement):
+def getInteger(statement : str):
     #Defensive method of asking for an integer
     #Can be tweaked for any data type or range
     while True:
