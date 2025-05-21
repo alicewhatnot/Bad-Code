@@ -4,7 +4,7 @@ def getInteger(statement : str):
     while True:
         try:
             userInput = int(input(statement))
-            if userInput < 0:
+            if userInput < 1 or userInput > 4:
                 raise Exception
             return userInput
         except:
